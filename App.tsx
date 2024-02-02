@@ -4,11 +4,11 @@ import { StyleSheet, View } from 'react-native';
 import { useTicTacToe } from './Hooks';
 
 export default function App() {
-  const [BuildPlayArea] = useTicTacToe();
+  const [Play] = useTicTacToe();
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      { BuildPlayArea() }
+      { Play() }
     </View>
   );
 }
