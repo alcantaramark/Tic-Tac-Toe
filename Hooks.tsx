@@ -1,72 +1,59 @@
 import React, { useRef } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 
-const useTicTacToe = () => {
-    const boxes = useRef<Array<React.RefObject<Image>>>(new Array(9));
 
-    
-    const Play = (): React.ReactNode => {
-        return(
-            <View style={styles.gridContainer}>
-                <View style={styles.gridRow}>
-                    <View style={styles.gridItem}>
-                        <Image source={require('./assets/logo.png')} style={styles.image} ref={boxes.current[0]} />
-                    </View>
-                    <View style={styles.gridItem}>
-                        <Image source={require('./assets/logo.png')} style={styles.image} ref={boxes.current[1]}/>
-                    </View>
-                    <View style={styles.gridItem}>
-                        <Image source={require('./assets/logo.png')} style={styles.image} ref={boxes.current[2]}/>
-                    </View>
-                </View>
-                <View style={styles.gridRow}>
-                    <View style={styles.gridItem}>
-                        <Image source={require('./assets/logo.png')} style={styles.image} ref={boxes.current[3]}/>
-                    </View>
-                    <View style={styles.gridItem}>
-                        <Image source={require('./assets/logo.png')} style={styles.image} ref={boxes.current[4]}/>
-                    </View>
-                    <View style={styles.gridItem}>
-                        <Image source={require('./assets/logo.png')} style={styles.image} ref={boxes.current[5]}/>
-                    </View>
-                </View>
-                <View style={styles.gridRow}>
-                    <View style={styles.gridItem}>
-                        <Image source={require('./assets/logo.png')} style={styles.image} ref={boxes.current[6]}/>
-                    </View>
-                    <View style={styles.gridItem}>
-                        <Image source={require('./assets/logo.png')} style={styles.image} ref={boxes.current[7]}/>
-                    </View>
-                    <View style={styles.gridItem}>
-                        <Image source={require('./assets/logo.png')} style={styles.image} ref={boxes.current[8]}/>
-                    </View>
-                </View>
-            </View>
-        );
+
+const useTicTacToe = (boxes:  React.MutableRefObject<React.RefObject<Image>[]>) => {
+    class Tree {
+        right: Tree | null = null;
+        left: Tree | null = null
+        value: number
+
+        constructor(value: number) {
+            this.value = value;
+        }
     }
 
-    return [Play];
-}
+    const root: Tree = new Tree(1);
 
-const styles = StyleSheet.create({
-   gridContainer: {
-    flexDirection: 'column',
-    alignItems: 'center'
-   },
-   gridRow: {
-    flexDirection: 'row'
-   },
-   gridItem: {
-    width: 150,
-    height: 150,
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-   },
-   image: {
-    width: 150,
-    height: 150
-   }
-});
+    const InitializeTree = () => {
+        root.left = new Tree(2);
+        root.left.left = new Tree(5);
+        root.left.left.left = new Tree(3);
+        root.left.left.right = new Tree(7);
+        root.left.left.right.left = new Tree(4);
+        root.left.left.right.left.left = new Tree(5);
+        root.left.left.right.left.right = new Tree(6);
+        root.left.left.right.right = new Tree(1);
+        root.left.left.right.right.left = new Tree(9);
+        root.left.left.right.right.right = new Tree(5);
+        root.left.right = new Tree(8);
+        root.right = new Tree(3);
+        root.right.left = new Tree(6);
+        root.right.right = new Tree(9);
+        root.right.right.left = new Tree(5);
+        root.right.right.right = new Tree(7);
+
+        console.log("Tree" ,root);
+    }
+
+    const CurrentGame = new Map([
+        [1, ''],
+        [2, ''],
+        [3, ''],
+        [4, ''],
+        [5, ''],
+        [6, ''],
+        [7, ''],
+        [8, ''],
+        [9, ''],
+    ])
+    
+    
+    InitializeTree();
+    return [CurrentGame];
+};
+
+
 
 export  { useTicTacToe };
