@@ -1,11 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useRef } from 'react';
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View, Image, TouchableOpacity, Pressable } from 'react-native';
 import { useTicTacToe } from './Hooks';
 
 export default function App() {
-  const boxes = useRef<Array<React.RefObject<Image>>>(new Array(9));
-  const [] = useTicTacToe(boxes)
+  const boxes = useRef<Array<React.RefObject<Image>>>(new Array(9).fill(0).map(() => React.createRef()));
+  
+  const [CurrentGameState, TurnBox] = useTicTacToe(boxes)
   
   return (
     <View style={styles.container}>
@@ -13,7 +14,9 @@ export default function App() {
       <View style={styles.gridContainer}>
         <View style={styles.gridRow}>
             <View style={styles.gridItem}>
-                <Image source={require('./assets/logo.png')} style={styles.image} ref={boxes.current[0]} />
+                <Pressable onPress={() => TurnBox(1)}>
+                  <Image source={require('./assets/logo.png')} style={styles.image} ref={boxes.current[0]} />
+                </Pressable>
             </View>
             <View style={styles.gridItem}>
                 <Image source={require('./assets/logo.png')} style={styles.image} ref={boxes.current[1]}/>
