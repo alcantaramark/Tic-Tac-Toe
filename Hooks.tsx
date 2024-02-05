@@ -1,9 +1,10 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 
 
 
-const useTicTacToe = (boxes:  React.MutableRefObject<React.RefObject<Image>[]>) => {
+const useTicTacToe = () => {
+    
     class Tree {
         right: Tree | null = null;
         left: Tree | null = null
@@ -15,6 +16,17 @@ const useTicTacToe = (boxes:  React.MutableRefObject<React.RefObject<Image>[]>) 
     }
 
     const root: Tree = new Tree(1);
+    const [currentPlayer, setCurrentPlayer] = useState('X');
+
+
+    const TurnBox = (boxNumer: number) => {
+        const newGameState = new Map([...CurrentGameState]);
+        if (newGameState.get(boxNumer) === '') {
+            newGameState.set(boxNumer, currentPlayer);
+            setCurrentPlayer(currentPlayer == 'X' ? 'O' : 'X');
+            setCurrentGameState(newGameState);
+        }
+    }
 
     const InitializeTree = () => {
         root.left = new Tree(2);
@@ -33,11 +45,9 @@ const useTicTacToe = (boxes:  React.MutableRefObject<React.RefObject<Image>[]>) 
         root.right.right = new Tree(9);
         root.right.right.left = new Tree(5);
         root.right.right.right = new Tree(7);
-
-        console.log("Tree" ,root);
     }
 
-    const CurrentGame = new Map([
+    const [CurrentGameState, setCurrentGameState]=  useState<Map<number, string>>(new Map([
         [1, ''],
         [2, ''],
         [3, ''],
@@ -47,11 +57,12 @@ const useTicTacToe = (boxes:  React.MutableRefObject<React.RefObject<Image>[]>) 
         [7, ''],
         [8, ''],
         [9, ''],
-    ])
+    ]));
     
+
     
     InitializeTree();
-    return [CurrentGame];
+    return [CurrentGameState, TurnBox] as const;
 };
 
 

@@ -1,50 +1,82 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useRef } from 'react';
-import { StyleSheet, View, Image } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { StyleSheet, View, Image, TouchableOpacity, Pressable, Text } from 'react-native';
 import { useTicTacToe } from './Hooks';
 
 export default function App() {
-  const boxes = useRef<Array<React.RefObject<Image>>>(new Array(9));
-  const [] = useTicTacToe(boxes)
+  const boxes = useState<Array<string>>(new Array(9).map((item) => item = './assets/logo.png'));
+  const [CurrentGameState, TurnBox] = useTicTacToe();
   
-  return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
+  const buildPlayArea = () => {
+    return(
       <View style={styles.gridContainer}>
         <View style={styles.gridRow}>
-            <View style={styles.gridItem}>
-                <Image source={require('./assets/logo.png')} style={styles.image} ref={boxes.current[0]} />
-            </View>
-            <View style={styles.gridItem}>
-                <Image source={require('./assets/logo.png')} style={styles.image} ref={boxes.current[1]}/>
-            </View>
-            <View style={styles.gridItem}>
-                <Image source={require('./assets/logo.png')} style={styles.image} ref={boxes.current[2]}/>
-            </View>
+          <View style={styles.gridItem} >
+            <Pressable onPress={() => TurnBox(1)}>
+                <Image style={styles.image} source={CurrentGameState.get(1) == '' ? require('./assets/logo.png')
+                  : CurrentGameState.get(1) === 'X' ? require('./assets/X.jpeg') : require('./assets/O.jpeg')} />
+            </Pressable> 
+          </View>
+          <View style={styles.gridItem} >
+            <Pressable onPress={() => TurnBox(2)}>
+                <Image style={styles.image} source={CurrentGameState.get(2) == '' ? require('./assets/logo.png')
+                  : CurrentGameState.get(2) === 'X' ? require('./assets/X.jpeg') : require('./assets/O.jpeg')} />
+            </Pressable> 
+          </View>
+          <View style={styles.gridItem} >
+            <Pressable onPress={() => TurnBox(3)}>
+                <Image style={styles.image} source={CurrentGameState.get(3) == '' ? require('./assets/logo.png')
+                  : CurrentGameState.get(3) === 'X' ? require('./assets/X.jpeg') : require('./assets/O.jpeg')} />
+            </Pressable> 
+          </View>
         </View>
         <View style={styles.gridRow}>
-            <View style={styles.gridItem}>
-                <Image source={require('./assets/logo.png')} style={styles.image} ref={boxes.current[3]}/>
-            </View>
-            <View style={styles.gridItem}>
-                <Image source={require('./assets/logo.png')} style={styles.image} ref={boxes.current[4]}/>
-            </View>
-            <View style={styles.gridItem}>
-                <Image source={require('./assets/logo.png')} style={styles.image} ref={boxes.current[5]}/>
-            </View>
+          <View style={styles.gridItem} >
+            <Pressable onPress={() => TurnBox(4)}>
+                <Image style={styles.image} source={CurrentGameState.get(4) == '' ? require('./assets/logo.png')
+                  : CurrentGameState.get(4) === 'X' ? require('./assets/X.jpeg') : require('./assets/O.jpeg')} />
+            </Pressable> 
+          </View>
+          <View style={styles.gridItem} >
+            <Pressable onPress={() => TurnBox(5)}>
+                <Image style={styles.image} source={CurrentGameState.get(5) == '' ? require('./assets/logo.png')
+                  : CurrentGameState.get(5) === 'X' ? require('./assets/X.jpeg') : require('./assets/O.jpeg')} />
+            </Pressable> 
+          </View>
+          <View style={styles.gridItem} >
+            <Pressable onPress={() => TurnBox(6)}>
+                <Image style={styles.image} source={CurrentGameState.get(6) == '' ? require('./assets/logo.png')
+                  : CurrentGameState.get(6) === 'X' ? require('./assets/X.jpeg') : require('./assets/O.jpeg')} />
+            </Pressable> 
+          </View>
         </View>
         <View style={styles.gridRow}>
-            <View style={styles.gridItem}>
-                <Image source={require('./assets/logo.png')} style={styles.image} ref={boxes.current[6]}/>
-            </View>
-            <View style={styles.gridItem}>
-                <Image source={require('./assets/logo.png')} style={styles.image} ref={boxes.current[7]}/>
-            </View>
-            <View style={styles.gridItem}>
-                <Image source={require('./assets/logo.png')} style={styles.image} ref={boxes.current[8]}/>
-            </View>
+          <View style={styles.gridItem} >
+            <Pressable onPress={() => TurnBox(7)}>
+                <Image style={styles.image} source={CurrentGameState.get(7) == '' ? require('./assets/logo.png')
+                  : CurrentGameState.get(7) === 'X' ? require('./assets/X.jpeg') : require('./assets/O.jpeg')} />
+            </Pressable> 
+          </View>
+          <View style={styles.gridItem} >
+            <Pressable onPress={() => TurnBox(8)}>
+                <Image style={styles.image} source={CurrentGameState.get(8) == '' ? require('./assets/logo.png')
+                  : CurrentGameState.get(8) === 'X' ? require('./assets/X.jpeg') : require('./assets/O.jpeg')} />
+            </Pressable> 
+          </View>
+          <View style={styles.gridItem} >
+            <Pressable onPress={() => TurnBox(9)}>
+                <Image style={styles.image} source={CurrentGameState.get(9) == '' ? require('./assets/logo.png')
+                  : CurrentGameState.get(9) === 'X' ? require('./assets/X.jpeg') : require('./assets/O.jpeg')} />
+            </Pressable> 
+          </View>
         </View>
       </View>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+     { buildPlayArea() }
     </View>
   );
 }
