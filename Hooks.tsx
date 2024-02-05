@@ -3,10 +3,8 @@ import { Image, StyleSheet, Text, View } from "react-native";
 
 
 
-const useTicTacToe = (boxes:  React.MutableRefObject<React.RefObject<Image>[]>) => {
+const useTicTacToe = () => {
     
-    console.log('boxes', boxes.current);
-
     class Tree {
         right: Tree | null = null;
         left: Tree | null = null
@@ -22,14 +20,12 @@ const useTicTacToe = (boxes:  React.MutableRefObject<React.RefObject<Image>[]>) 
 
 
     const TurnBox = (boxNumer: number) => {
-
-        if (currentPlayer == 'X') {
-            boxes.current[boxNumer].current!.setNativeProps({ 'source': require('./assets/X.jpeg') })
+        const newGameState = new Map([...CurrentGameState]);
+        if (newGameState.get(boxNumer) === '') {
+            newGameState.set(boxNumer, currentPlayer);
+            setCurrentPlayer(currentPlayer == 'X' ? 'O' : 'X');
+            setCurrentGameState(newGameState);
         }
-        else {
-            boxes.current[boxNumer].current!.setNativeProps({ 'source': require('./assets/O.jpeg') })
-        }
-        setCurrentPlayer(currentPlayer == 'X' ? 'O' : 'X');
     }
 
     const InitializeTree = () => {
@@ -49,11 +45,9 @@ const useTicTacToe = (boxes:  React.MutableRefObject<React.RefObject<Image>[]>) 
         root.right.right = new Tree(9);
         root.right.right.left = new Tree(5);
         root.right.right.right = new Tree(7);
-
-        console.log("Tree" ,root);
     }
 
-    const CurrentGameState: Map<number, string> = new Map([
+    const [CurrentGameState, setCurrentGameState]=  useState<Map<number, string>>(new Map([
         [1, ''],
         [2, ''],
         [3, ''],
@@ -63,8 +57,9 @@ const useTicTacToe = (boxes:  React.MutableRefObject<React.RefObject<Image>[]>) 
         [7, ''],
         [8, ''],
         [9, ''],
-    ])
+    ]));
     
+
     
     InitializeTree();
     return [CurrentGameState, TurnBox] as const;
