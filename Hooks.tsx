@@ -4,8 +4,6 @@ import { Image, StyleSheet, Text, View } from "react-native";
 
 
 const useTicTacToe = () => {
-    let s: number[] = new Array();
-
     class Tree {
         right: Tree | null = null;
         left: Tree | null = null
@@ -18,6 +16,7 @@ const useTicTacToe = () => {
 
     const root: Tree = new Tree(1);
     const [currentPlayer, setCurrentPlayer] = useState('X');
+    const [winner, setWinner] = useState<string>('');
 
 
     const TurnBox = (boxNumer: number) => {
@@ -26,7 +25,7 @@ const useTicTacToe = () => {
             newGameState.set(boxNumer, currentPlayer);
             setCurrentPlayer(currentPlayer == 'X' ? 'O' : 'X');
             setCurrentGameState(newGameState);
-            DetermineWinner(root);
+            DetermineGameState(root);
         }
     }
 
@@ -61,15 +60,28 @@ const useTicTacToe = () => {
         [9, ''],
     ]));
     
-    const DetermineWinner = (node: Tree | null) => {
+    const DetermineGameState = (node: Tree | null) => {
         if (node == null) {
             return;
         }
-        DetermineWinner(node.left);
-        
-        DetermineWinner(node.right);
+        DetermineGameState(node.left);
+        IsThereAWinner(node);
+        DetermineGameState(node.right);
     }
     
+    const IsThereAWinner = (node: Tree) => {
+        if (node.left == null || node.right == null) {
+            return;
+        }
+
+        if (CurrentGameState.get(node.left.value) == '' || CurrentGameState.get(node.right.value) == '') {
+            return;
+        }
+
+        //if (CurrentGameState.get(node.value) == CurrentGameState.get(node.left.value))
+
+    }
+
     InitializeTree();
     return [CurrentGameState, TurnBox] as const;
 };
