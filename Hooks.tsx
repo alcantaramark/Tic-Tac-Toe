@@ -4,7 +4,8 @@ import { Image, StyleSheet, Text, View } from "react-native";
 
 
 const useTicTacToe = () => {
-    
+    let s: number[] = new Array();
+
     class Tree {
         right: Tree | null = null;
         left: Tree | null = null
@@ -25,6 +26,7 @@ const useTicTacToe = () => {
             newGameState.set(boxNumer, currentPlayer);
             setCurrentPlayer(currentPlayer == 'X' ? 'O' : 'X');
             setCurrentGameState(newGameState);
+            DetermineWinner(root);
         }
     }
 
@@ -59,7 +61,14 @@ const useTicTacToe = () => {
         [9, ''],
     ]));
     
-
+    const DetermineWinner = (node: Tree | null) => {
+        if (node == null) {
+            return;
+        }
+        DetermineWinner(node.left);
+        
+        DetermineWinner(node.right);
+    }
     
     InitializeTree();
     return [CurrentGameState, TurnBox] as const;
