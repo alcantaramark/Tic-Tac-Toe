@@ -5,8 +5,20 @@ import { useTicTacToe } from './Hooks';
 
 export default function App() {
   const boxes = useState<Array<string>>(new Array(9).map((item) => item = './assets/logo.png'));
-  const [CurrentGameState, TurnBox] = useTicTacToe();
+  const [CurrentGameState, TurnBox, Winner] = useTicTacToe();
   
+  if (Winner === 'X') {
+    alert('Player X wins');
+  }
+
+  if (Winner === 'O') {
+    alert('Player O wins');
+  }
+
+  if (Winner === 'Draw') {
+    alert('It is a draw');
+  }
+
   const buildPlayArea = () => {
     return(
       <View style={styles.gridContainer}>
