@@ -32,8 +32,13 @@ const useTicTacToe = () => {
     ]));
 
     useEffect(() => {
+        const allValuesEmpty = Array.from(CurrentGameState.values()).every(value => value === '');
+        
+        if (allValuesEmpty) {
+            return;
+        }
+
         DetermineGameState(root);
-        console.log('Current Game State', CurrentGameState);
     }, [CurrentGameState]);
 
     
@@ -77,7 +82,7 @@ const useTicTacToe = () => {
     
     const IsThereAWinner = (node: Tree) => {
         if (node.left == null || node.right == null) {
-            return;
+            return '';
         }
 
         if (CurrentGameState.get(node.left.value) == 'X' && CurrentGameState.get(node.right.value) == 'X'
@@ -98,8 +103,16 @@ const useTicTacToe = () => {
 
     }
 
+    const StartNewGame = () => {
+        const newGameState = new Map([...CurrentGameState]);
+        newGameState.forEach((value, key) => newGameState.set(key, ''));
+        setCurrentGameState(newGameState);
+        setWinner('');
+        setCurrentPlayer('X');
+    }
+
     InitializeTree();
-    return [CurrentGameState, TurnBox, Winner] as const;
+    return [CurrentGameState, TurnBox, Winner, StartNewGame] as const;
 };
 
 

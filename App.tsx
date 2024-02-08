@@ -1,22 +1,42 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useRef, useState } from 'react';
-import { StyleSheet, View, Image, TouchableOpacity, Pressable, Text } from 'react-native';
+import { StyleSheet, View, Image, TouchableOpacity, Pressable, Text, Alert, Platform } from 'react-native';
 import { useTicTacToe } from './Hooks';
+
 
 export default function App() {
   const boxes = useState<Array<string>>(new Array(9).map((item) => item = './assets/logo.png'));
-  const [CurrentGameState, TurnBox, Winner] = useTicTacToe();
+  const [CurrentGameState, TurnBox, Winner, StartNewGame] = useTicTacToe();
+  
   
   if (Winner === 'X') {
-    alert('Player X wins');
+    if (Platform.OS === 'ios'){
+      Alert.alert('Winner', 'Player X wins');
+    }
+    else {
+      alert('Player X wins');
+      StartNewGame();
+    }
   }
 
   if (Winner === 'O') {
-    alert('Player O wins');
+    if (Platform.OS === 'ios'){
+      alert('Winner', 'Player O wins');
+    }
+    else {
+      alert('Player O wins');
+      StartNewGame();
+    }
   }
 
   if (Winner === 'Draw') {
-    alert('It is a draw');
+    if (Platform.OS === 'ios'){
+      Alert.alert('Winner', 'It is a draw');
+    }
+    else {
+      alert('It\'s a draw');
+      StartNewGame();
+    }
   }
 
   const buildPlayArea = () => {
