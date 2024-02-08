@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Alert, Platform } from "react-native";
+
 
 
 
@@ -17,8 +18,30 @@ const useTicTacToe = () => {
 
     const root: Tree = new Tree(1);
     const [currentPlayer, setCurrentPlayer] = useState('X');
+    const [Winner, setWinner] = useState<string>('');
+    const [CurrentGameState, setCurrentGameState]=  useState<Map<number, string>>(new Map([
+        [1, ''],
+        [2, ''],
+        [3, ''],
+        [4, ''],
+        [5, ''],
+        [6, ''],
+        [7, ''],
+        [8, ''],
+        [9, ''],
+    ]));
 
+    useEffect(() => {
+        const allValuesEmpty = Array.from(CurrentGameState.values()).every(value => value === '');
+        
+        if (allValuesEmpty) {
+            return;
+        }
 
+        DetermineGameState(root);
+    }, [CurrentGameState]);
+
+    
     const TurnBox = (boxNumer: number) => {
         const newGameState = new Map([...CurrentGameState]);
         if (newGameState.get(boxNumer) === '') {
@@ -47,22 +70,49 @@ const useTicTacToe = () => {
         root.right.right.right = new Tree(7);
     }
 
-    const [CurrentGameState, setCurrentGameState]=  useState<Map<number, string>>(new Map([
-        [1, ''],
-        [2, ''],
-        [3, ''],
-        [4, ''],
-        [5, ''],
-        [6, ''],
-        [7, ''],
-        [8, ''],
-        [9, ''],
-    ]));
     
+    const DetermineGameState = (node: Tree | null) => {
+        if (node == null) {
+            return;
+        }
+        DetermineGameState(node.left);
+        IsThereAWinner(node);
+        DetermineGameState(node.right);
+    }
+    
+    const IsThereAWinner = (node: Tree) => {
+        if (node.left == null || node.right == null) {
+            return '';
+        }
 
-    
+        if (CurrentGameState.get(node.left.value) == 'X' && CurrentGameState.get(node.right.value) == 'X'
+            && CurrentGameState.get(node.value) == 'X') {
+            setWinner('X');
+            return;
+        }
+
+        if (CurrentGameState.get(node.left.value) == 'O' && CurrentGameState.get(node.right.value) == 'O'
+            && CurrentGameState.get(node.value) == 'O') {
+            setWinner('O');
+            return;
+        }
+
+        if ([...CurrentGameState.entries()].find(([key, value]) => value == '') === undefined) {
+            setWinner('Draw');
+        }
+
+    }
+
+    const StartNewGame = () => {
+        const newGameState = new Map([...CurrentGameState]);
+        newGameState.forEach((value, key) => newGameState.set(key, ''));
+        setCurrentGameState(newGameState);
+        setWinner('');
+        setCurrentPlayer('X');
+    }
+
     InitializeTree();
-    return [CurrentGameState, TurnBox] as const;
+    return [CurrentGameState, TurnBox, Winner, StartNewGame] as const;
 };
 
 
