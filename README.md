@@ -1,14 +1,7 @@
 Tic Tac Toe Mobile App
 
-Welcome to the Tic Tac Toe mobile app! This simple yet classic game is built using React and Expo, providing an interactive and enjoyable gaming experience. What sets this Tic Tac Toe app apart is its efficient algorithm based on a binary search tree, ensuring optimal gameplay and challenging opponents.
+Welcome to the Tic Tac Toe mobile app! This simple yet classic game is built using React and Expo, providing an interactive and enjoyable gaming experience. What sets this Tic Tac Toe app apart is its efficient algorithm based on a binary search tree, ensuring optimal gameplay.
 
-Features
-
-Play against a computer opponent with advanced AI powered by a binary search tree algorithm.
-Engage in seamless multiplayer mode with friends and family.
-Enjoy a user-friendly interface with intuitive touch controls.
-Experience responsive design for various screen sizes and orientations.
-Track game history and statistics for improved performance analysis.
 Technologies Used
 
 React Native: A JavaScript framework for building native mobile applications, offering a rich set of components and tools for efficient development.
