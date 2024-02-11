@@ -5,38 +5,22 @@ import { useTicTacToe } from './Hooks';
 
 
 export default function App() {
-  const boxes = useState<Array<string>>(new Array(9).map((item) => item = './assets/logo.png'));
   const [CurrentGameState, TurnBox, Winner, StartNewGame] = useTicTacToe();
   
   
   if (Winner === 'X') {
-    if (Platform.OS === 'ios'){
-      Alert.alert('Winner', 'Player X wins');
-    }
-    else {
-      alert('Player X wins');
-      StartNewGame();
-    }
+    Alert.alert('Winner', 'Player X wins');
+    StartNewGame();
   }
 
   if (Winner === 'O') {
-    if (Platform.OS === 'ios'){
-      alert('Winner', 'Player O wins');
-    }
-    else {
-      alert('Player O wins');
-      StartNewGame();
-    }
+    Alert.alert('Winner', 'Player O wins');
+    StartNewGame();
   }
 
   if (Winner === 'Draw') {
-    if (Platform.OS === 'ios'){
-      Alert.alert('Winner', 'It is a draw');
-    }
-    else {
-      alert('It\'s a draw');
-      StartNewGame();
-    }
+    Alert.alert('It\'s a draw!');
+    StartNewGame();
   }
 
   const buildPlayArea = () => {
@@ -119,24 +103,25 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   gridContainer: {
    flexDirection: 'column',
-   alignItems: 'center'
+   alignItems: 'center',
   },
   gridRow: {
    flexDirection: 'row'
   },
   gridItem: {
-   width: 150,
-   height: 150,
+   width: 120,
+   height: 120,
    borderWidth: 1,
    alignItems: 'center',
-   justifyContent: 'center'
+   justifyContent: 'center',
+   marginLeft: 0
   },
   image: {
-   width: 150,
-   height: 150
+   width: 120,
+   height: 120
   }
 });
