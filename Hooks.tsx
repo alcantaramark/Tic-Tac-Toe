@@ -32,12 +32,6 @@ const useTicTacToe = () => {
     ]));
 
     useEffect(() => {
-        const allValuesEmpty = Array.from(CurrentGameState.values()).every(value => value === '');
-        
-        if (allValuesEmpty) {
-            return;
-        }
-
         DetermineGameState(root);
     }, [CurrentGameState]);
 
@@ -77,6 +71,9 @@ const useTicTacToe = () => {
         }
         DetermineGameState(node.left);
         IsThereAWinner(node);
+        if (Winner !== ''){
+            return;
+        }
         DetermineGameState(node.right);
     }
     

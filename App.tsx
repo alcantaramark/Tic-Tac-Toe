@@ -10,33 +10,17 @@ export default function App() {
   
   
   if (Winner === 'X') {
-    if (Platform.OS === 'ios'){
-      Alert.alert('Winner', 'Player X wins');
-    }
-    else {
-      alert('Player X wins');
-      StartNewGame();
-    }
+    Alert.alert('Winner', 'Player X wins');
+    StartNewGame();
   }
 
   if (Winner === 'O') {
-    if (Platform.OS === 'ios'){
-      alert('Winner', 'Player O wins');
-    }
-    else {
-      alert('Player O wins');
-      StartNewGame();
-    }
+    Alert.alert('Winner', 'Player O wins');
   }
 
   if (Winner === 'Draw') {
-    if (Platform.OS === 'ios'){
-      Alert.alert('Winner', 'It is a draw');
-    }
-    else {
-      alert('It\'s a draw');
-      StartNewGame();
-    }
+    Alert.alert('It\'s a draw!');
+    StartNewGame();
   }
 
   const buildPlayArea = () => {
