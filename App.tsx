@@ -5,7 +5,6 @@ import { useTicTacToe } from './Hooks';
 
 
 export default function App() {
-  const boxes = useState<Array<string>>(new Array(9).map((item) => item = './assets/logo.png'));
   const [CurrentGameState, TurnBox, Winner, StartNewGame] = useTicTacToe();
   
   
@@ -16,6 +15,7 @@ export default function App() {
 
   if (Winner === 'O') {
     Alert.alert('Winner', 'Player O wins');
+    StartNewGame();
   }
 
   if (Winner === 'Draw') {
@@ -103,24 +103,25 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   gridContainer: {
    flexDirection: 'column',
-   alignItems: 'center'
+   alignItems: 'center',
   },
   gridRow: {
    flexDirection: 'row'
   },
   gridItem: {
-   width: 150,
-   height: 150,
+   width: 120,
+   height: 120,
    borderWidth: 1,
    alignItems: 'center',
-   justifyContent: 'center'
+   justifyContent: 'center',
+   marginLeft: 0
   },
   image: {
-   width: 150,
-   height: 150
+   width: 120,
+   height: 120
   }
 });
